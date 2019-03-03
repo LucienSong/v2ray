@@ -8,7 +8,7 @@ cyan='\e[96m'
 none='\e[0m'
 
 # Root
-[[ $(id -u) != 0 ]] && echo -e "\n 哎呀……请使用 ${red}root ${none}用户运行 ${yellow}~(^_^) ${none}\n" && exit 1
+# [[ $(id -u) != 0 ]] && echo -e "\n 哎呀……请使用 ${red}root ${none}用户运行 ${yellow}~(^_^) ${none}\n" && exit 1
 
 cmd="sudo apt-get"
 
@@ -856,7 +856,7 @@ config() {
 	fi
 	_load config.sh
 
-	if [[ $cmd == "apt-get" ]]; then
+	if [[ $cmd == "sudo apt-get" ]]; then
 		cat >/etc/network/if-pre-up.d/iptables <<-EOF
 #!/bin/sh
 /sbin/iptables-restore < /etc/iptables.rules.v4
@@ -984,7 +984,7 @@ install() {
 	# [[ $caddy ]] && domain_check
 	install_v2ray
 	if [[ $caddy || $v2ray_port == "80" ]]; then
-		if [[ $cmd == "yum" ]]; then
+		if [[ $cmd == "sudo yum" ]]; then
 			[[ $(pgrep "httpd") ]] && systemctl stop httpd
 			[[ $(command -v httpd) ]] && yum remove httpd -y
 		else
